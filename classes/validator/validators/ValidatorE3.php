@@ -24,40 +24,8 @@ class ValidatorE3 extends WeightedIterationValidator
     public function __construct(Bank $bank)
     {
         parent::__construct($bank);
-        
-        $this->setWeights(array(2, 1));
-        $this->setDivisor(10);
+        $this->validators[] = new Validator00($bank);
+        $this->validators[] = new Validator21($bank);
     }
-    
-    protected function iterationStep()
-    {
-        $this->accumulator += $this->crossSum($this->number * $this->getWeight());
-    }
-    
-    protected function validate00()
-    {
-        $result = $this->divisor - ($this->accumulator % $this->divisor);
-        $result = ($result == $this->divisor) ? 0 : $result;
-        return (string)$result === $this->getCheckNumber();
-    }
-    
-    protected function validate21()
-    {
-        $this->accumulator = 10;
-        $result = $this->accumulator;
-        while ($result >= 10) {
-            $result = $this->crossSum($result);
-        }
-        $result = 10 - $result;
-        return (string)$result === $this->getCheckNumber();
-    }
-    
-    protected function getResult()
-    {
-        if($result = $this->validate00()){
-            return $result;
-        } else {
-            return $this->validate21();
-        }    
-    }
+   
 }
