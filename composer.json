@@ -1,15 +1,20 @@
 {
-    "name": "malkusch/bav",
+    "name": "dennobaby/bav",
     "type": "library",
     "description": "BAV provides validation for German Bank Accounts (Konto)",
     "keywords": ["bank", "account", "bankaccount", "validation", "check", "konto"],
-    "homepage": "http://bav.malkusch.de/",
     "license": "WTFPL",
     "authors": [
         {
             "name": "Markus Malkusch",
             "email": "markus@malkusch.de",
             "homepage": "http://markus.malkusch.de",
+            "role": "Developer"
+        },
+        {
+            "name": "Dennis Ditte",
+            "email": "dennis@double-d.it",
+            "homepage": "http://double-d.it",
             "role": "Developer"
         }
     ],
