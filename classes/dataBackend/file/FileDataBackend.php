@@ -124,6 +124,7 @@ class FileDataBackend extends DataBackend
 
         }
         fclose($tempH);
+        unlink($file);
         $this->fileUtil->safeRename($temp, $file);
     }
 
