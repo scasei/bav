@@ -44,7 +44,7 @@ class FileUtil
     public function safeRename($source, $destination)
     {
         $isRenamed = @rename($source, $destination);
-        if ($isRenamed) {
+        if ($isRenamed||is_readable($destination)) {
             return;
 
         }
@@ -52,7 +52,7 @@ class FileUtil
         // copy to the target filesystem
         $tempFileOnSameFS = "$destination.tmp";
 
-        $isCopied = copy($source, $tempFileOnSameFS);
+        $isCopied = @copy($source, $tempFileOnSameFS);
         if (! $isCopied) {
             throw new FileException(
                 "failed to copy $source to $tempFileOnSameFS."
@@ -60,13 +60,13 @@ class FileUtil
 
         }
 
-        $isUnlinked = unlink($source);
-        if (! $isUnlinked) {
-            trigger_error("Failed to unlink $source.");
+        $isUnlinked = @unlink($source);
+//         if (! $isUnlinked && is_writable($source)) {
+//             trigger_error("Failed to unlink $source.");
 
-        }
+//         }
 
-        $isRenamed = rename($tempFileOnSameFS, $destination);
+        $isRenamed = @rename($tempFileOnSameFS, $destination);
         if (! $isRenamed) {
             throw new FileException(
                 "failed to rename $tempFileOnSameFS to $destination."
